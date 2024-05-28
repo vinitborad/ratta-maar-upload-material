@@ -32,7 +32,7 @@ export default function Page() {
     'chemistry',
     'be',
   ]; // Add your subject names here
-  const types = ['notes', 'assignments', 'manuals', 'papers', 'cheatSheets', 'pyq']; // Add your types here
+  const types = ['notes', 'assignments', 'manuals', 'papers', 'cheatSheets', 'pyq', 'syllabus']; // Add your types here
 
   const handleInputChange = (e: any) => {
     setFormData({

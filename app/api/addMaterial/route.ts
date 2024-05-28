@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Material exist with same name, typs and subject. Please delete or change it and try again !' }, { status: 400 });
     } else {
 
-      if (['notes', 'assignments', 'manuals', 'papers', 'cheatSheets', 'pyq'].includes(type)) {
+      if (['notes', 'assignments', 'manuals', 'papers', 'cheatSheets', 'pyq', 'syllabus'].includes(type)) {
 
         const byteData = await file.arrayBuffer();
         const buffer = Buffer.from(byteData);

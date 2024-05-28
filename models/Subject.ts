@@ -40,6 +40,10 @@ const SubjectSchema: Schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Material',
     }],
+    syllabus: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Material',
+    }],
 }, {
     timestamps: true, // Automatically manage createdAt and updatedAt fields
     // toJSON: { virtuals: true }, // Include virtuals when document is converted to JSON
