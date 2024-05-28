@@ -16,7 +16,7 @@ const SubjectSchema: Schema = new Schema({
         unique: true, // Ensures the name is unique within the collection
     },
     notes: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, 
         ref: 'Material', // This should match the name you've given your Material model
     }],
     assignments: [{
@@ -33,6 +33,10 @@ const SubjectSchema: Schema = new Schema({
         ref: 'Material',
     }],
     pyq: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Material',
+    }],
+    cheatSheets: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Material',
     }],

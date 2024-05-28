@@ -6,6 +6,16 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
+async function putObject({ fileName, contentType, type, s3Client}: any) {
+  const command = new PutObjectCommand({
+    Bucket: 'ratta-maar',
+    Key: `materials/${type}/${fileName}`,
+    ContentType: contentType,
+  });
+  const url = await getSignedUrl(s3Client, command);
+  return url;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const data: any = await req.formData();
@@ -52,7 +62,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Material exist with same name, typs and subject. Please delete or change it and try again !' }, { status: 400 });
     } else {
 
-      if (['notes', 'assignments', 'manuals', 'papers'].includes(type)) {
+      if (['notes', 'assignments', 'manuals', 'papers', 'cheatSheets', 'pyq'].includes(type)) {
 
         const byteData = await file.arrayBuffer();
         const buffer = Buffer.from(byteData);
@@ -65,22 +75,12 @@ export async function POST(req: NextRequest) {
         const s3Client = new S3Client({
           region: "ap-south-1",
           credentials: {
-            accessKeyId: "AKIAZI2LCHFXSVFVK5FN",
-            secretAccessKey: "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"
+            accessKeyId: process.env.AWS_ACCESS_KEY,
+            secretAccessKey: process.env.AWS_SECRETS_KEY
           }
         });
 
-        async function putObject(filename, contentType) {
-          const command = new PutObjectCommand({
-            Bucket: 'ratta-maar',
-            Key: `materials/${type}/${fileName}`,
-            ContentType: contentType,
-          });
-          const url = await getSignedUrl(s3Client, command);
-          return url;
-        }
-
-        const putUrl = await putObject(fileName, file.type);
+        const putUrl = await putObject({ fileName, contentType: 'application/pdf', type, s3Client });
 
         // console.log("put url is ", putUrl);
 
