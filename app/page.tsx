@@ -6,8 +6,6 @@ import { useState } from "react";
 
 export default function Page() {
 
-  const { id } = useParams();
-
   const [loading, setLoading] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -50,7 +48,7 @@ export default function Page() {
     });
   };
 
-  const domain = 'http://localhost:3000';
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
 
   const handleSubmit = async (e: any) => {
     setLoading(true);
