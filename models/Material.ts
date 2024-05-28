@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 
 export interface IMaterial {
   name: string;
+  subject: string;
+  type: string;
   url: string;
   description?: string;
   createdAt?: Date;
@@ -13,6 +15,14 @@ export interface IMaterial {
 const MaterialSchema = new mongoose.Schema<IMaterial>(
   {
     name: {
+      type: String,
+      required: true,
+    },
+    subject: {
+      type: String,
+      required: true,
+    },
+    type: {
       type: String,
       required: true,
     },

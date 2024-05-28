@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
 
         // console.log("file url which gonna to save in mongodb", url);
         // Create a new Material document if it does not exist
-        const newMaterial = await Material.create({ name, url, description });
+        const newMaterial = await Material.create({ name, url, description, subject: subjectName, type });
 
         subject[type] = subject[type] ? [...subject[type], newMaterial._id] : [newMaterial._id];
         await subject.save();
