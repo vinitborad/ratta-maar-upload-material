@@ -75,8 +75,8 @@ export async function POST(req: NextRequest) {
         const s3Client = new S3Client({
           region: "ap-south-1",
           credentials: {
-            accessKeyId: process.env.AWS_ACCESS_KEY,
-            secretAccessKey: process.env.AWS_SECRETS_KEY
+            accessKeyId: process.env.AWS_ACCESS_KEY_CODE,
+            secretAccessKey: process.env.AWS_SECRETS_KEY_CODE
           }
         });
 
@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
 
         // console.log("get url is ", getUrl);
 
-        const url = `https://${process.env.AWS_BUCKET_NAME}.s3.ap-south-1.amazonaws.com/materials/${type}/${fileName}`;
+        const url = `https://${process.env.AWS_BUCKET_NAME_CODE}.s3.ap-south-1.amazonaws.com/materials/${type}/${fileName}`;
 
         // console.log("file url which gonna to save in mongodb", url);
         // Create a new Material document if it does not exist
