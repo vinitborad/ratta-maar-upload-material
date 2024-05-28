@@ -8,6 +8,11 @@ export default function Page() {
 
   const { id } = useParams();
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+
   const [formData, setFormData] = useState<any>({
     name: '',
     description: '',
@@ -45,7 +50,10 @@ export default function Page() {
     });
   };
 
+  const domain = 'http://localhost:3000';
+
   const handleSubmit = async (e: any) => {
+    setLoading(true);
     e.preventDefault();
     const formDataToSend = new FormData();
     formDataToSend.append('name', formData.name);
@@ -55,32 +63,60 @@ export default function Page() {
     formDataToSend.append('file', formData.file);
 
     try {
-      const res = await axios.post('http://localhost:3000/api/addMaterial', formDataToSend);
+      const res = await axios.post(`${domain}/api/addMaterial`, formDataToSend);
+      setSuccessMessage('File uploaded successfully');
+      setErrorMessage('');
       console.log('File uploaded successfully:', res.data);
-      // You can handle the response here, such as displaying a success message.
-    } catch (error) {
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Error uploading file';
+      setErrorMessage(message);
+      setSuccessMessage('');
       console.error('Error uploading file:', error);
-      // Handle error, display error message, etc.
+    } finally {
+      setLoading(false);
     }
   };
 
 
 
   return (
-    <div>
-      <h1>Upload Form</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold mb-6 text-center">Upload Form</h1>
+      {loading && <div className="text-center mb-4">Loading...</div>}
+      {successMessage && <div className="bg-green-100 text-green-700 p-2 mb-4 rounded">{successMessage}</div>}
+      {errorMessage && <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">{errorMessage}</div>}
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleInputChange} className=" text-black" />
+          <label className="block text-sm font-medium text-gray-700">Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
+            disabled={loading}
+          />
         </div>
         <div>
-          <label>Description:</label>
-          <input type="text" name="description" value={formData.description} onChange={handleInputChange} className=" text-black" />
+          <label className="block text-sm font-medium text-gray-700">Description:</label>
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
+            disabled={loading}
+          />
         </div>
         <div>
-          <label>Subject Name:</label>
-          <select name="subjectName" value={formData.subjectName} onChange={handleInputChange} className="text-black">
+          <label className="block text-sm font-medium text-gray-700">Subject Name:</label>
+          <select
+            name="subjectName"
+            value={formData.subjectName}
+            onChange={handleInputChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
+            disabled={loading}
+          >
             <option value="">Select Subject</option>
             {subjects.map((subject, index) => (
               <option key={index} value={subject}>{subject}</option>
@@ -88,8 +124,14 @@ export default function Page() {
           </select>
         </div>
         <div>
-          <label>Type:</label>
-          <select name="type" value={formData.type} onChange={handleInputChange} className="text-black">
+          <label className="block text-sm font-medium text-gray-700">Type:</label>
+          <select
+            name="type"
+            value={formData.type}
+            onChange={handleInputChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
+            disabled={loading}
+          >
             <option value="">Select Type</option>
             {types.map((type, index) => (
               <option key={index} value={type}>{type}</option>
@@ -97,10 +139,23 @@ export default function Page() {
           </select>
         </div>
         <div>
-          <label>Upload PDF:</label>
-          <input type="file" accept="application/pdf" onChange={handleFileChange} className=" text-black" />
+          <label className="block text-sm font-medium text-gray-700">Upload PDF:</label>
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
+            disabled={loading}
+          />
         </div>
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className={`w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          disabled={loading}
+        >
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
       </form>
     </div>
   )
