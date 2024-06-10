@@ -10,14 +10,21 @@ type UploadResult = {
 
 async function uploadToCloudinary(buffer: Buffer, subjectName: string, type: string, fileName: string): Promise<UploadResult> {
   return new Promise((resolve, reject) => {
+    const sanitizedFileName = fileName.replace(/[^\w-]/g, '_');
+    // const sanitizedSubjectName = subjectName.replace(/[^\w-]/g, '_');
+
+    const publicId = `materials/${subjectName}/${type}/${sanitizedFileName}`;
+    console.log("Uploading to Cloudinary with public_id:", publicId);
+
     cloudinary.uploader.upload_stream(
       {
         resource_type: 'raw', // specify resource type as 'raw' for non-image/video files
-        public_id: `materials/${subjectName}/${type}/${fileName}`, // set the public ID (path and filename)
+        public_id: publicId, // set the public ID (path and filename)
         format: 'pdf', // ensure the format is PDF
       },
       (error, result) => {
         if (error) {
+          console.error("Cloudinary upload error:", error);
           reject(error);
         } else {
           resolve(result as UploadResult);
@@ -26,6 +33,7 @@ async function uploadToCloudinary(buffer: Buffer, subjectName: string, type: str
     ).end(buffer);
   });
 }
+
 
 export async function POST(req: NextRequest) {
   try {
