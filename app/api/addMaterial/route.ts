@@ -54,6 +54,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'No file Uploaded !' }, { status: 400 });
     }
 
+    // Validate file size (Cloudinary limit is 10MB)
+    const MAX_FILE_SIZE = 10485760; // 10MB in bytes
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json({ message: `File size too large. Maximum allowed is 10MB.` }, { status: 400 });
+    }
+
     await dbConnect();
 
     // Attempt to find the Subject, or create a new one if it doesn't exist
