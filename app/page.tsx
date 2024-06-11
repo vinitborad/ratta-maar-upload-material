@@ -29,8 +29,10 @@ export default function Page() {
     'maths-1',
     'maths-2',
     'physics',
+    'physics-2',
     'chemistry',
     'be',
+    'bce',
   ]; // Add your subject names here
   const types = ['notes', 'assignments', 'manuals', 'papers', 'cheatSheets', 'pyq', 'syllabus']; // Add your types here
 
