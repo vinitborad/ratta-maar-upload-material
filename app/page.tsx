@@ -20,6 +20,12 @@ export default function Page() {
   });
 
   const subjects = [
+    'complex-variables-and-partial-differential-equations-civil',
+    'fluid-mechanics-and-hydraulics',
+    'control-sysytem-theory',
+    'electrical-circuit-analysis',
+    'applied-mathematics-for-electrical-engineering',
+    'analog-and-digital-electronics',
     'design-engineering-1-b',
     'analog-circuit-design',
     'signal-systems',
@@ -37,10 +43,10 @@ export default function Page() {
     'discrete-mathematics',
     'principles-of-economics-and-management',
     'operating-system-and-virtualization',
+    'operating-system',
     'surveying',
     'structural-analysis-i',
     'civil-engineering-societal-global-impact',
-    'complex-variables-and-partial-differential-equations',
     'economics-for-engineers',
     'electrical-machine-i',
     'electromagnetic-fields',
