@@ -84,6 +84,7 @@ export default function Page() {
     'control-system-and-analysis',
     'design-engineering-1-a',
     'probability-and-statistics',
+    'effective-technical-communication',
     'indian-constitution',
     'control-systems',
     'digital-system-design',
