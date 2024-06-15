@@ -20,6 +20,11 @@ export default function Page() {
   });
 
   const subjects = [
+    'network-analysis',
+    'fluid-flow-operation',
+    'chemical-engineering-themodynamics-i',
+    'material-and-energy-balance-computation',
+    'applied-chemistry',
     'complex-variables-and-partial-differential-equations-civil',
     'fluid-mechanics-and-hydraulics',
     'control-sysytem-theory',
